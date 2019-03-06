@@ -7,7 +7,7 @@
       <h1>
         Page Header
         <small>Optional description</small>
-        <a href="{{ route('tag.create')}}" class="btn btn-primary">ADD</a>
+        <a href="{{ route('permission.create')}}" class="btn btn-primary">ADD</a>
       </h1>
       <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
@@ -23,39 +23,25 @@
                     <tr>
                         <th scope="col">id</th>
                         <th scope="col">nom</th>
-                        <th scope="col">posts</th>
-                        <th scope="col">tutoriels</th>
                         <th scope="col">action</th>
                     </tr>
                 </thead>
                 <tbody>
                     
-                    @foreach ($tags as $tag)
+                    @foreach ($permissions as $permission)
                     <tr>       
-                       <th scope="row">{{$tag->id}}</th>
-                       <td>{{ $tag->name }}</td>
-                        <td>
-                            @foreach ($tag->posts()->get() as $post)
-                                {{ $post->title }} <br>
-                            @endforeach
-                        </td>
-                        <td>
-                            @foreach ($tag->tutoriels()->get() as $tutoriel)
-                                {{ $tutoriel->title }} <br>
-                            @endforeach
-                        </td>
-
+                       <th scope="row">{{$permission->id}}</th>
+                       <td>{{ $permission->name }}</td>
                        <td>
                            <ul class="list-inline">
-                               <li><a class="btn btn-block btn-success btn-xs" href="{{route('tag.edit',$tag->id)}}">modifier</a></li>
+                               <li><a class="btn btn-block btn-success btn-xs" href="{{route('permission.edit',$permission->id)}}">modifier</a></li>
                                <li>
-                                   <form method="POST" action="{{ route('tag.destroy', $tag->id)}}">
+                                   <form method="POST" action="{{ route('permission.destroy', $permission->id)}}">
    					         {{ csrf_field() }}
    					         {{ method_field('DELETE') }}
                                 <button class="btn btn-block btn-danger btn-xs">supprimer</button>
                            </form>
                                </li>
-                               
                            </ul>
                            
                            

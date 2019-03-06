@@ -4,12 +4,11 @@ namespace App\Http\Controllers\back;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\User;
 use Spatie\Permission\Models\Permission;
-use Spatie\Permission\Models\Role;
 
 
-class adminController extends Controller
+
+class permissionController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,23 +16,9 @@ class adminController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {       
-        
-        $p1 = Permission::findByid(1);
-        $user1 = User::find(1);
-        $user1->givePermissionTo($p1);
-        
-        $p2 = Permission::findByid(2);
-        $user2 = User::find(2);
-        $user2->givePermissionTo($p2); 
-        
-        $r = Role::findByid(1);
-        $user3 = User::find(3);
-        $user3->assignRole($r);
-        
-
-        $users = User::All();
-        return view('admin.list',compact('users'));
+    {
+        $permissions = Permission::All();
+        return view('permission.list',compact('permissions'));
     }
 
     /**
@@ -43,6 +28,7 @@ class adminController extends Controller
      */
     public function create()
     {
+        return view('permission.create');
     }
 
     /**
@@ -53,8 +39,18 @@ class adminController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        
+       $this->validate($request,[
+           'name'=>'required',
+           
+       ]);
+       $pos = new Permission();
+       $pos->name = $request->name;
+       $pos->save();
+
+        return view('permission.list');
     }
+    
 
     /**
      * Display the specified resource.
@@ -75,7 +71,9 @@ class adminController extends Controller
      */
     public function edit($id)
     {
-        //
+        $permission = Permission::find($id);
+
+        return view('permission.update', compact('permission'));
     }
 
     /**
@@ -87,7 +85,13 @@ class adminController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+         $this->validate($request,[
+            'name'=>'required',
+            ]);
+        $post = Permission::find($id);
+        $post->name = $request->name;
+        $post->save();
+        return view('permission.list');
     }
 
     /**
@@ -98,6 +102,8 @@ class adminController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $post = Permission::find($id);
+         $post->delete();
+        return view('permission.list');
     }
 }

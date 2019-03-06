@@ -7,7 +7,7 @@
       <h1>
         Page Header
         <small>Optional description</small>
-        <a href="{{ route('tag.create')}}" class="btn btn-primary">ADD</a>
+        <a href="{{ route('tutoriel.create')}}" class="btn btn-primary">ADD</a>
       </h1>
       <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
@@ -23,39 +23,33 @@
                     <tr>
                         <th scope="col">id</th>
                         <th scope="col">nom</th>
-                        <th scope="col">posts</th>
-                        <th scope="col">tutoriels</th>
+                        <th scope="col">description</th>
+                        <th> Tags</th>
                         <th scope="col">action</th>
                     </tr>
                 </thead>
                 <tbody>
                     
-                    @foreach ($tags as $tag)
+                    @foreach ($tutoriels as $tutoriel)
                     <tr>       
-                       <th scope="row">{{$tag->id}}</th>
-                       <td>{{ $tag->name }}</td>
+                       <th scope="row">{{$tutoriel->id}}</th>
+                       <td>{{ $tutoriel->title }}</td>
+                       <td>{{ $tutoriel->description }}</td>
                         <td>
-                            @foreach ($tag->posts()->get() as $post)
-                                {{ $post->title }} <br>
+                            @foreach ($tutoriel->tags()->get() as $tag)
+                                {{ $tag->name }}
                             @endforeach
                         </td>
-                        <td>
-                            @foreach ($tag->tutoriels()->get() as $tutoriel)
-                                {{ $tutoriel->title }} <br>
-                            @endforeach
-                        </td>
-
                        <td>
                            <ul class="list-inline">
-                               <li><a class="btn btn-block btn-success btn-xs" href="{{route('tag.edit',$tag->id)}}">modifier</a></li>
+                               <li><a class="btn btn-block btn-success btn-xs" href="{{route('tutoriel.edit',$tutoriel->id)}}">modifier</a></li>
                                <li>
-                                   <form method="POST" action="{{ route('tag.destroy', $tag->id)}}">
+                                   <form method="POST" action="{{ route('tutoriel.destroy', $tutoriel->id)}}">
    					         {{ csrf_field() }}
    					         {{ method_field('DELETE') }}
                                 <button class="btn btn-block btn-danger btn-xs">supprimer</button>
                            </form>
                                </li>
-                               
                            </ul>
                            
                            

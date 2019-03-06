@@ -20,11 +20,11 @@
           
             <div class="box box-primary">
             <div class="box-header with-border">
-              <h3 class="box-title">add Post</h3>
+              <h3 class="box-title">add tutoriel</h3>
             </div>
             <!-- /.box-header -->
             <!-- form start -->
-            <form method="POST" action="{{ route('post.store')}}" enctype="multipart/form-data">
+            <form method="POST" action="{{ route('tutoriel.store')}}" enctype="multipart/form-data">
                 {{ csrf_field() }}
               <div class="box-body">
                 <div class="form-group">
@@ -35,26 +35,15 @@
                   <label for="description">description</label>
                   <textarea id="description" class="form-control" name="description"></textarea>
                 </div>
-                <div class="form-group">
-                  <label for="image">Image</label>
-                  <input type="file" class="form-control" id="image" name="image">
-                </div>
-                <div class="form-group">
-                    <label for="category">Category</label>
-                    <select class="form-control" name="category">
-                        @foreach($categories as $category)
-                        <option value="{{$category->id}}">{{$category->name}}</option>
-                        @endforeach
-                    </select>
-                </div>
                   <div class="form-group">
-                    <label for="category">Category</label>
-                    <select class="form-control" name="tag[]" multiple=“multiple”>
-                       @foreach ($tags as $tag)
-                   <option value="{{$tag->id}}">{{$tag->name}}</option>
-                    @endforeach
-                    </select>
-                </div>
+                      <label for="category">Category</label>
+                      <select class="form-control" name="tag[]" multiple=“multiple”>
+                          @foreach ($tags as $tag)
+                              <option value="{{$tag->id}}">{{$tag->name}}</option>
+                          @endforeach
+                      </select>
+                  </div>
+
                </div>
               
 

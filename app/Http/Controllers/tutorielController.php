@@ -1,15 +1,12 @@
 <?php
 
-namespace App\Http\Controllers\back;
+namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-use App\User;
-use Spatie\Permission\Models\Permission;
-use Spatie\Permission\Models\Role;
+use App\Tutoriel;
+use App\Tag;
 
-
-class adminController extends Controller
+class tutorielController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,23 +14,10 @@ class adminController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {       
-        
-        $p1 = Permission::findByid(1);
-        $user1 = User::find(1);
-        $user1->givePermissionTo($p1);
-        
-        $p2 = Permission::findByid(2);
-        $user2 = User::find(2);
-        $user2->givePermissionTo($p2); 
-        
-        $r = Role::findByid(1);
-        $user3 = User::find(3);
-        $user3->assignRole($r);
-        
+    {
+        $tutoriels = Tutoriel::All();
 
-        $users = User::All();
-        return view('admin.list',compact('users'));
+        return view('tutoriel.list', compact('tutoriels'));
     }
 
     /**
@@ -43,6 +27,8 @@ class adminController extends Controller
      */
     public function create()
     {
+        $tags = Tag::All();
+        return view('tutoriel.create', compact('tags'));
     }
 
     /**
@@ -53,7 +39,18 @@ class adminController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request,[
+           'title'=>'required',
+           'description' => 'required',
+         
+           
+       ]);
+        $pos = new Tutoriel();
+        $pos->title = $request->title;
+        $pos->description = $request->description;
+        $pos->save();
+        $pos->tags()->sync($request->tag, false);
+        return view('tutoriel.list');
     }
 
     /**
@@ -75,7 +72,8 @@ class adminController extends Controller
      */
     public function edit($id)
     {
-        //
+        $tutoriel = Tutoriel::find($id);
+        return view('tutoriel.update', compact('tutoriel'));
     }
 
     /**
@@ -87,7 +85,17 @@ class adminController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request,[
+           'title'=>'required',
+           'description' => 'required',
+         
+           
+       ]);
+        $pos = Tutoriel::find($id);
+        $pos->title = $request->title;
+        $pos->description = $request->description;
+        $pos->save();
+        return view('tutoriel.list');
     }
 
     /**
@@ -98,6 +106,8 @@ class adminController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $pos = Tutoriel::find($id);
+        $pos->delete();
+        return view('tutoriel.list');
     }
 }

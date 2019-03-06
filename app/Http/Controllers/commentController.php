@@ -1,15 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\back;
+namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-use App\User;
-use Spatie\Permission\Models\Permission;
-use Spatie\Permission\Models\Role;
 
-
-class adminController extends Controller
+class commentController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,23 +12,8 @@ class adminController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {       
-        
-        $p1 = Permission::findByid(1);
-        $user1 = User::find(1);
-        $user1->givePermissionTo($p1);
-        
-        $p2 = Permission::findByid(2);
-        $user2 = User::find(2);
-        $user2->givePermissionTo($p2); 
-        
-        $r = Role::findByid(1);
-        $user3 = User::find(3);
-        $user3->assignRole($r);
-        
-
-        $users = User::All();
-        return view('admin.list',compact('users'));
+    {
+        //
     }
 
     /**
@@ -43,6 +23,7 @@ class adminController extends Controller
      */
     public function create()
     {
+        //
     }
 
     /**

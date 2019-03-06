@@ -271,7 +271,10 @@ desired effect
         <li class="header">HEADER</li>
         <!-- Optionally, you can add icons to the links -->
         <li class="active"><a href="{{ route('admin.index')}}"><i class="fa fa-link"></i> <span>Users</span></a></li>
-        <li><a href="{{ route('post.index')}}"><i class="fa fa-link"></i> <span>posts</span></a></li>
+          <li><a href="{{ route('permission.index')}}"><i class="fa fa-link"></i> <span>Permissions</span></a></li>
+          <li><a href="{{ route('role.index')}}"><i class="fa fa-link"></i> <span>Roles</span></a></li>
+        <li><a href="{{ route('post.index')}}"><i class="fa fa-link"></i> <span>posts</span></a></li> 
+          <li><a href="{{ route('tutoriel.index')}}"><i class="fa fa-link"></i> <span>tutoriel</span></a></li> 
           <li><a href="{{ route('category.index')}}"><i class="fa fa-link"></i> <span>categories </span></a></li>
           <li><a href="{{ route('tag.index')}}"><i class="fa fa-link"></i> <span>tags </span></a></li>
         <li class="treeview">

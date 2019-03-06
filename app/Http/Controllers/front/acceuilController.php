@@ -8,6 +8,9 @@ use Illuminate\Support\Facades\Mail;
 use App\Post;
 use App\Category;
 use App\Mail\Contact;
+use App\Tutoriel;
+use App\Comment;
+use App\Tag;
 
 class acceuilController extends Controller
 {
@@ -23,7 +26,15 @@ class acceuilController extends Controller
     {
         $posts = Post::All();
         $categories = Category::All();
-        return view('front.acceuil',compact('posts'),compact('categories'));
+        $tags = Tag::All();
+        return view('front.acceuil',compact('posts' ,'categories','tags'));
+    }
+     public function index1()
+    {
+        $tutoriels = Tutoriel::All();
+         $categories = Category::All();
+        $tags = Tag::All();
+        return view('front.acceuil1',compact('tutoriels','categories', 'tags'));
     }
 
     /**
@@ -34,7 +45,8 @@ class acceuilController extends Controller
     public function create()
     {
         $categories = Category::All();
-        return view('front.contact', compact('categories'));
+        $tags = Tag::All();
+        return view('front.contact', compact('categories'), compact('tags'));
     }
 
     public function store(Request $request)
@@ -70,14 +82,66 @@ class acceuilController extends Controller
     {
         $post = Post::find($id);
         $categories = Category::All();
-        return view('front.single',compact('post'),compact('categories'));
+        $tags = Tag::All();
+        return view('front.single',compact('post','categories', 'tags'));
+    }
+    public function show1($id)
+    {
+        $tutoriel = Tutoriel::find($id);
+        $categories = Category::All();
+        $tags = Tag::All();
+        return view('front.single1',compact('tutoriel','categories', 'tags'));
+    }
+    public function comment(Request $request, $id)
+    {
+        
+       $this->validate($request,[
+            'body'=>'required',
+            ]);
+        $comment = new Comment;
+        $comment->body = $request->body;
+        $post = Post::find($id);
+        $post->comments()->save($comment);
+        $comment->save();
+        
+        
+        $categories = Category::All();
+        $tags = Tag::All();
+        return view('front.single',compact('post','categories', 'tags'));
+        
+    }
+     public function comment1(Request $request, $id)
+    {
+        $this->validate($request,[
+            'body'=>'required',
+            ]);
+        $comment = new Comment;
+        $comment->body = $request->body;
+        $tutoriel = Tutoriel::find($id);
+        $tutoriel->comments()->save($comment);
+        $comment->save();
+        
+        
+        $categories = Category::All();
+        $tags = Tag::All();
+        return view('front.single1',compact('tutoriel', 'categories', 'tags'));
+        
+    }
+    public function tag($id)
+    {
+        $t = Tag::find($id);
+        $categories = Category::All();
+        $tags = Tag::All();
+        return view('front.bytag',compact('t', 'categories', 'tags'));
+
     }
     public function showw($id)
     {
         $cat = Category::find($id);
         $posts = $cat->posts()->get();
         $categories = Category::All();
-        return view('front.category',compact('posts'),compact('categories'));
+        $tags = Tag::All();
+        return view('front.category',compact('posts', 'categories', 'tags'));
     }
 
     

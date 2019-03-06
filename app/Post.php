@@ -16,6 +16,10 @@ class Post extends Model
     }
     public function tags()
     {
-        return $this->belongsToMany('App\Tag');
+        return $this->morphToMany('App\Tag', 'tagable');
     }
+   public function comments(){
+
+       return $this->morphMany('App\Comment', 'comentable');
+   }
 }

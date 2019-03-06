@@ -7,7 +7,7 @@
       <h1>
         Page Header
         <small>Optional description</small>
-        <a href="{{ route('tag.create')}}" class="btn btn-primary">ADD</a>
+        <a href="{{ route('role.create')}}" class="btn btn-primary">ADD</a>
       </h1>
       <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Level</a></li>
@@ -23,39 +23,32 @@
                     <tr>
                         <th scope="col">id</th>
                         <th scope="col">nom</th>
-                        <th scope="col">posts</th>
-                        <th scope="col">tutoriels</th>
+                        <th>permissions</th>
                         <th scope="col">action</th>
                     </tr>
                 </thead>
                 <tbody>
                     
-                    @foreach ($tags as $tag)
+                    @foreach ($roles as $role)
                     <tr>       
-                       <th scope="row">{{$tag->id}}</th>
-                       <td>{{ $tag->name }}</td>
+                       <th scope="row">{{$role->id}}</th>
+                       <td>{{ $role->name }}</td>
                         <td>
-                            @foreach ($tag->posts()->get() as $post)
-                                {{ $post->title }} <br>
-                            @endforeach
+                             @foreach ($role->permissions()->pluck('name') as $permission)
+                               <span >{{ $permission }}</span><br>
+                             @endforeach
+                        
                         </td>
-                        <td>
-                            @foreach ($tag->tutoriels()->get() as $tutoriel)
-                                {{ $tutoriel->title }} <br>
-                            @endforeach
-                        </td>
-
                        <td>
                            <ul class="list-inline">
-                               <li><a class="btn btn-block btn-success btn-xs" href="{{route('tag.edit',$tag->id)}}">modifier</a></li>
-                               <li>
-                                   <form method="POST" action="{{ route('tag.destroy', $tag->id)}}">
+                               <li><a class="btn btn-block btn-success btn-xs" href="{{route('role.edit',$role->id)}}">modifier</a></li>
+                               <li>  
+                                   <form method="POST" action="{{ route('role.destroy', $role->id)}}">
    					         {{ csrf_field() }}
    					         {{ method_field('DELETE') }}
                                 <button class="btn btn-block btn-danger btn-xs">supprimer</button>
                            </form>
                                </li>
-                               
                            </ul>
                            
                            

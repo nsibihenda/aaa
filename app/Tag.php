@@ -10,6 +10,10 @@ class Tag extends Model
      
     public function posts()
     {
-        return $this->belongsToMany('App\Post');
+        return $this->morphedByMany('App\Post', 'tagable');
+    }
+    public function tutoriels()
+    {
+        return $this->morphedByMany('App\Tutoriel', 'tagable');
     }
 }
